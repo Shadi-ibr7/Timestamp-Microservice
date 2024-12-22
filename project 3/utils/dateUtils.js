@@ -3,28 +3,28 @@ const parseDate = (dateStr) => {
     return new Date();
   }
   
-  return /^\d+$/.test(dateStr) 
-    ? new Date(parseInt(dateStr))
-    : new Date(dateStr);
+  // Handle Unix timestamp (milliseconds)
+  if (/^\d+$/.test(dateStr)) {
+    return new Date(parseInt(dateStr));
+  }
+  
+  // Handle date string
+  const parsedDate = new Date(dateStr);
+  if (parsedDate.toString() === 'Invalid Date') {
+    return parsedDate;
+  }
+  
+  return parsedDate;
 };
 
 const formatResponse = (date) => {
   if (date.toString() === 'Invalid Date') {
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ error: 'Invalid Date' })
-    };
+    return { error: 'Invalid Date' };
   }
 
   return {
-    statusCode: 200,
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      unix: date.getTime(),
-      utc: date.toUTCString()
-    })
+    unix: date.getTime(),
+    utc: date.toUTCString()
   };
 };
 
