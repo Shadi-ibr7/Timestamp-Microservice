@@ -1,0 +1,12 @@
+{
+  "name": "timestamp-microservice",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "build": "mkdir -p dist && cp -r public/* dist/"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}
